@@ -152,6 +152,9 @@ submit = function(code) { // Submits a guess code
 			secret_code.appendChild(make_dot(secret[i]));
 		}
 
+		// Then the question "Can you guess the code?" is changed to "Success!"
+		document.getElementById("banner").innerText = "Success!";
+
 	}
 }
 
