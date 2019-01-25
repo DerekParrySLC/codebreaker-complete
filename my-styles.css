@@ -3,6 +3,20 @@ body {
 	margin-top: 50px;
 }
 
+h1 {
+	font-family: monospace;
+	font-size: 50px;
+	margin: -10px;
+}
+
+h3 {
+	margin: 0px;
+	font-family: sans-serif;
+}
+
+.response {
+	font-size: small;
+}
 button { 
 	background-color: lightgray;
 	border: none;
@@ -16,17 +30,29 @@ button:focus {
 	outline: none;
 }
 
+hr {
+	width: 33%;
+    height: 10px;
+    border: 0;
+    box-shadow: inset 0 15px 10px -10px lightgray;
+}
+
 span {
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
 	line-height: 30px;
+	color: white;
 	border-radius: 50%;
 	height: 30px;
 	width: 30px;
 	margin: 5px;
 	margin-left: 25px;
 	margin-right: 25px;
+}
+
+#secret_code {
+	padding: 10px;
 }
 
 .empty {
