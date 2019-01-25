@@ -138,8 +138,8 @@ submit = function(code) { // Submits a guess code
 	// The response to the guess is shown below
 	var guess_response = document.createElement("div");
 	guess_response.setAttribute("class", "response");
-	guess_response.innerHTML += "<strong>" + response[0] + "</strong> right place and color. ";
-	guess_response.innerHTML += "<strong>" + response[1] + "</strong> right place and wrong color.";
+	guess_response.innerHTML += "<strong>" + response[0] + "</strong> right place/color. ";
+	guess_response.innerHTML += "<strong>" + response[1] + "</strong> right place, wrong color.";
 	previous_guess.appendChild(guess_response);
 
 	// The response to the guess is shown
