@@ -1,5 +1,5 @@
 // Dot colors
-colors = ["blue", "green", "red", "yellow", ];
+colors = ["red", "green", "blue", "yellow", ];
 
 // Number of dots in a code
 number = 4;
