@@ -5,6 +5,7 @@ colors = ["blue", "green", "red", "yellow", ];
 number = 4;
 
 // Parts of the web page
+banner = document.getElementById("banner");
 secret_code = document.getElementById("secret_code");
 previous = document.getElementById("previous");
 guess = document.getElementById("guess");
@@ -153,7 +154,7 @@ submit = function(code) { // Submits a guess code
 		}
 
 		// Then the question "Can you guess the code?" is changed to "Success!"
-		document.getElementById("banner").innerText = "Success!";
+		banner.innerText = "Success!";
 
 	}
 }
@@ -238,6 +239,9 @@ reset = function reset() {
 	all_codes = make_all_codes();
 	remaining_codes = make_all_codes();
 	all_responses = make_all_responses();
+	
+	// The banner is reset
+	banner.innerText = "Can you guess the code?";
 
 	// Dummy question marks are put in place of the secret code
 	for (let i=0; i < number; i++) {
