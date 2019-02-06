@@ -1,5 +1,5 @@
 // Dot colors
-colors = ["red", "green", "blue", "yellow", ];
+colors = ["red", "green", "blue", "yellow",];
 
 // Number of dots in a code
 number = 4;
@@ -11,37 +11,33 @@ previous = document.getElementById("previous");
 guess = document.getElementById("guess");
 menu = document.getElementById("menu");
 
-// Important arrays
-secret = [];
-code = [];
-guess_dots = [];
-all_codes = [];
-remaining_codes = [];
-all_responses = [];
+secret = []; // The secret code
+code = []; // The guess being built
+guess_dots = []; // Dots that show the guess being built
+remaining_codes = []; // Codes that haven't been eliminated
 
-clear_tag = function(tag) { // Clears all children from an html tag
+clear_tag = function(tag) { // Clears all children from an HTML tag
 	while (tag.firstChild) {
 		tag.removeChild(tag.firstChild);
 	}
 }
 
 matches = function(a, b) { // Checks if two arrays match perfectly
-		// Checks to see if two arrays are equal
 		if (a.length !== b.length) {
 			return false;
 		}
 
 		// After this loop, equals is true if all elements of the array are equal
-		var equals = true;
+		let equals = true;
 		for (let i=0; i < a.length; i++) {
 			equals = equals && (a[i] == b[i]);
 		}
 		return equals;
 	}
 
-make_dot = function(color=colors[0], html_class="dot") { // Makes a dot
-	var dot = document.createElement("span");
-	dot.setAttribute("class", html_class);
+make_dot = function(color=colors[0], html_class="dot") { // Makes dot of given class
+	let dot = document.createElement("span");
+	dot.classList.add(html_class);
 	dot.style.backgroundColor = color;
 	return dot;
 }
@@ -54,7 +50,7 @@ clear = function() { // Clears the current guess
 
 	// Empty dots are added to guess_dots and the guess tag to be used later
 	for (let i=0; i < number; i++) {
-		var dot = make_dot("white", "empty");
+		let dot = make_dot("white", "empty");
 		guess_dots.push(dot);
 		guess.appendChild(dot);
 	}
@@ -73,12 +69,12 @@ respond = function(guess, hidden=null) { // Gives response to a guess based on t
 		hidden = secret;
 	}
 
-	var full_matches = 0;
-	var half_matches = 0;
+	let full_matches = 0;
+	let half_matches = 0;
 
 	// Anything that is not a full-match is saved to review for half-matches
-	var unmatched_guess = [];
-	var unmatched_hidden = [];
+	let unmatched_guess = [];
+	let unmatched_hidden = [];
 	for (let i=0; i < hidden.length; i++) {
 		if (hidden[i] == guess[i]) {
 			full_matches++;
@@ -101,7 +97,7 @@ respond = function(guess, hidden=null) { // Gives response to a guess based on t
 }
 
 eliminate = function(guess, response) { // Gives all codes eliminated by a response
-	var eliminated = [];
+	let eliminated = [];
 
 	// Response mismatch means a remaining code can't be the hidden one
 	for (let i=0; i < remaining_codes.length; i++) {
@@ -113,12 +109,12 @@ eliminate = function(guess, response) { // Gives all codes eliminated by a respo
 	return eliminated;
 }
 
-submit = function(code) { // Submits a guess code
-	var response = respond(code);
-	var eliminated = eliminate(code, response);
+function submit(code) { // Submits a guess code
+	let response = respond(code);
+	let eliminated = eliminate(code, response);
 
 	// Remaining possible secrets codes after this guess are determined
-	var remaining = [];
+	let remaining = [];
 	for (let i=0; i < remaining_codes.length; i++) {
 		if (!eliminated.includes(remaining_codes[i])) {
 			remaining.push(remaining_codes[i]);
@@ -127,17 +123,17 @@ submit = function(code) { // Submits a guess code
 	remaining_codes = remaining;
 
 	// The previous_guess and it's response is shown
-	var previous_guess = document.createElement("div");
+	let previous_guess = document.createElement("div");
 
 	// The guess is shown at the top
-	var guessed_code = document.createElement("div");
+	let guessed_code = document.createElement("div");
 	for (let i=0; i < code.length; i++) {
 		guessed_code.appendChild(make_dot(code[i]));
 	}
 	previous_guess.appendChild(guessed_code);
 
 	// The response to the guess is shown below
-	var guess_response = document.createElement("div");
+	let guess_response = document.createElement("div");
 	guess_response.setAttribute("class", "response");
 	guess_response.innerHTML += "<strong>" + response[0] + "</strong> right color/place | ";
 	guess_response.innerHTML += "<strong>" + response[1] + "</strong> right color, wrong place";
@@ -157,6 +153,9 @@ submit = function(code) { // Submits a guess code
 		banner.innerText = "Success!";
 
 	}
+
+	// The guess is cleared
+	clear();
 }
 
 make_all_codes = function make_all_codes(base=null) { // Provides all possible codes
@@ -166,7 +165,7 @@ make_all_codes = function make_all_codes(base=null) { // Provides all possible c
 			base.push([colors[i]]);
 		}
 	} else { // This is recursion in this function
-		var longer = [];
+		let longer = [];
 		for (let i=0; i < base.length; i++) { // For each base array
 			for (let j=0; j < colors.length; j++) { // Add another array with the next color at the end
 				longer.push(base[i].concat([colors[j]]));
@@ -185,7 +184,7 @@ make_all_codes = function make_all_codes(base=null) { // Provides all possible c
 
 make_all_responses = function make_all_responses() { // Provides all possible reponses
 	// Every combination of full and half matches smaller than number is produced
-	var responses = [];
+	let responses = [];
 	for (let i=0; i <= number; i++) {
 		for (let j=0; i + j <= number; j++) {
 			responses.push([i, j]);
@@ -195,28 +194,30 @@ make_all_responses = function make_all_responses() { // Provides all possible re
 }
 
 random = function() { // Provides a random code of colors
-	choose = function(choices) { // Picks a random element choices
+	choose = function(choices) { // Picks a random element from choices
 		return choices[Math.floor(Math.random() * choices.length)];
 	}
 
-	// A result filled with random elements from colors is returned
-	var result = [];
+	// An array of random colors is returned
+	let result = [];
 	while (result.length < number) {
-		result = result.concat(choose(colors));
+		result[result.length] = choose(colors);
 	}
 	return result;
 }
 
-ai = function() { // Artificial intelligence that plays the game
-	// Start with assuming the first in the list is best, but look for something better
-	var guess = remaining_codes[0];
-	var best = 1;
+ai = function() { // Game playing artificial intelligence
+	// The first remaining code will win or at least eliminate itself
+	let guess = remaining_codes[0];
+	let best = 1;
 
 	for (let i=0; i < all_codes.length; i++) { // Each potential code is checked
-		var eliminations = [];
+		let eliminations = [];
+
 		for (let j=0; j < all_responses.length; j++) { // against each potential response
 			eliminations.push(eliminate(all_codes[i], all_responses[j]).length);
 		}
+		
 		if (Math.min(...eliminations) > best) { // and the code with the best minimum is found
 			guess = all_codes[i];
 			best = Math.min(...eliminations);
@@ -245,7 +246,7 @@ reset = function reset() {
 
 	// Dummy question marks are put in place of the secret code
 	for (let i=0; i < number; i++) {
-		var dot = make_dot("gray", "dots");
+		let dot = make_dot("gray", "dots");
 		dot.appendChild(document.createTextNode("?"));
 		secret_code.appendChild(dot);
 	}
@@ -254,38 +255,32 @@ reset = function reset() {
 	clear();
 
 	// The colored circles to click when making a guess are added
-	var click_dots = document.createElement("div");
-	for (let i=0; i < number; i++) {
-		var dot = make_dot(colors[i]);
-		dot.addEventListener("click", function () {
-			add_to_guess(colors[i]);
-		})
+	let click_dots = document.createElement("div");
+	for (let i=0; i < colors.length; i++) {
+		let dot = make_dot(colors[i]);
+		dot.onclick = function () {add_to_guess(colors[i]);};
 		click_dots.appendChild(dot);
 	}
 	menu.appendChild(click_dots);
 
 	// Buttons are created
-	var submit_button = document.createElement("button");
-	submit_button.addEventListener("click", function () {
-		// Submits the current guess
-		submit(code);
-		clear();
-	});
+	let submit_button = document.createElement("button");
+	submit_button.onclick = function () {submit(code);};
 	submit_button.appendChild(document.createTextNode("Submit"));
 	menu.appendChild(submit_button);
 	
-	var clear_button = document.createElement("button");
-	clear_button.addEventListener("click", clear);
+	let clear_button = document.createElement("button");
+	clear_button.onclick = clear;
 	clear_button.appendChild(document.createTextNode("Clear"));
 	menu.appendChild(clear_button);
 
-	var ai_button = document.createElement("button");
-	ai_button.addEventListener("click", ai);
+	let ai_button = document.createElement("button");
+	ai_button.onclick = ai;
 	ai_button.appendChild(document.createTextNode("A.I."));
 	menu.appendChild(ai_button);
 
-	var new_game_button = document.createElement("button");
-	new_game_button.addEventListener("click", reset);
+	let new_game_button = document.createElement("button");
+	new_game_button.onclick = reset;
 	new_game_button.appendChild(document.createTextNode("New Game"));
 	menu.appendChild(new_game_button);
 }
