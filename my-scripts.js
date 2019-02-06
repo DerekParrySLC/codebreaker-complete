@@ -1,5 +1,5 @@
 // Dot colors
-colors = ["red", "green", "blue", "yellow",];
+colors = ["#FF4136", "#2ECC40", "#0074D9", "#FFDC00"];
 
 // Number of dots in a code
 number = 4;
@@ -149,8 +149,8 @@ function submit(code) { // Submits a guess code
 			secret_code.appendChild(make_dot(secret[i]));
 		}
 
-		// Then the question "Can you guess the code?" is changed to "Success!"
-		banner.innerText = "Success!";
+		// Then the question "Can you guess the code?" is changed to "You win!"
+		banner.innerText = "You win!";
 
 	}
 
